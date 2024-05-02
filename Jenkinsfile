@@ -65,10 +65,19 @@ pipeline {
         stage("Trivy Image Scan") {
             steps {
                 script {
-                    sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image reysylaj/reddit-clone-pipeline:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table > trivyimage.txt')
-                }
+                    // Check if the Docker image exists
+                    def imageExists = sh(returnStdout: true, script: "docker inspect reysylaj/reddit-clone-pipeline:latest || true").trim()
+                    if (!imageExists) {
+                        error "Docker image reysylaj/reddit-clone-pipeline:latest does not exist"
+                    }
+                    // Authenticate with Docker registry if needed
+                    docker.withRegistry('', DOCKER_PASS) {
+                        // Perform Trivy scan
+                        sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image reysylaj/reddit-clone-pipeline:latest --no-progress --scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table > trivyimage.txt')
             }
         }
+    }
+}
         stage ('Cleanup Artifacts') {
             steps {
                 script {
