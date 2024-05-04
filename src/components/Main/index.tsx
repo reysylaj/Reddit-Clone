@@ -4,7 +4,7 @@ import React from "react";
 const Main: React.FC<{}> = () => {
   return (
     <div>
-      Here is main
+      Test CICD
       <Link href="/r/notShadeesCommunity">hehe</Link>
     </div>
   );
