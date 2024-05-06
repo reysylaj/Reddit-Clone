@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https://reysylaj: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@github.com/reysylaj/Reddit-Clone.git'
+                git branch: 'main', url: 'https://reysylaj:ghp_XXXXXXXXXXXX@github.com/reysylaj/Reddit-Clone.git'
             }
         }
         stage("Sonarqube Analysis") {
@@ -94,7 +94,7 @@ pipeline {
                 body: "Project: ${env.JOB_NAME}<br/>" +
                     "Build Number: ${env.BUILD_NUMBER}<br/>" +
                     "URL: ${env.BUILD_URL}<br/>",
-                to: 'malokmalok492@gmail.com',                              
+                to: 'maXXXXXXXXXX492@gmail.com',                              
                 attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
         }
     }
